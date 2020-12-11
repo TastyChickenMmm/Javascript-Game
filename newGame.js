@@ -1,18 +1,11 @@
 function drawAll(){
-  applyVel(circlePos, circleVel);
-  if (SLOW_CIRCLE_DOWN) {
-    slowCircleDown();
-  }
-  keepCircleIn()
-
   context.clearRect(0,0,canvas.width, canvas.height);
 
   context.beginPath();
-  context.arc(circlePos[0], circlePos[1], 50, 0, 2 * Math.PI);
+  // context.arc(circlePos[0], circlePos[1], 50, 0, 2 * Math.PI);
   context.stroke();
   TANK.draw();
   window.requestAnimationFrame(drawAll)
-
 }
 
 // Get width/height of the browser window
@@ -33,44 +26,14 @@ context = canvas.getContext("2d");
 document.addEventListener("keyup", myKeyUp)
 document.addEventListener("keydown", myKeyDown);
 
-// a = 0
-circlePos = [50,50]
-circleVel = [0,0]
-SLOW_CIRCLE_DOWN = false
-
 var TANK = new Tank(100, 100, 0, 0);
 console.log(TANK);
 
 window.requestAnimationFrame(drawAll)
 
-function applyVel(pos, vel){
-  for (i = 0; i < pos.length; i++){
-    pos[i] += vel[i]
-  }
-}
-
-function slowCircleDown(){
-  if (Math.min(circleVel) < 0.1) {
-    circleVel = [0,0]
-  } else {
-    circleVel[0] *= 0.8
-    circleVel[1] *= 0.8
-  }
-}
-
-function keepCircleIn(){
-  circlePos[0] = Math.max(circlePos[0], 50)
-  circlePos[0] = Math.min(circlePos[0], canvas.width - 50)
-  circlePos[1] = Math.max(circlePos[1], 50)
-  circlePos[1] = Math.min(circlePos[1], canvas.height - 50)
-}
-
 function myKeyUp (event) {
-  // SLOW_CIRCLE_DOWN = true;
   TANK.isMoving = false;
-  // circleVel = [0,0];
 }
-
 
 function myKeyDown (event) {
   /*
@@ -88,28 +51,6 @@ function myKeyDown (event) {
   console.log(keyCode);
   console.log(keyStr);
 
-  // if (keyStr == 'w' && circlePos[1] > 50) {
-  //   // Move circle up
-  //   // circleVel[1] = -5;
-  //
-  // }
-  // if (keyStr == 'a' && circlePos[0] > 50) {
-  //   // Move circle left
-  //   circleVel[0] = -5;
-  // }
-  // if (keyStr == 's' && circlePos[1] < canvas.height - 50) {
-  //   // Move circle down
-  //   circleVel[1] = 5;
-  // }
-  // if (keyStr == 'd' && circlePos[0] < canvas.width - 50) {
-  //   // Move circle right
-  //   circleVel[0] = 5;
-  // }
-  // if (keyStr == 'w' && circlePos[1] > 50) {
-  //   // Move circle up
-  //   // circleVel[1] = -5;
-  //
-  // }
   if (keyStr == 'w') {
     // Move tank forward
     TANK.move(1);
@@ -121,8 +62,11 @@ function myKeyDown (event) {
   if (keyStr == 'a') {
     TANK.rotateBodyLeft();
   }
-  if (keyStr == 'd' && circlePos[0] < canvas.width - 50) {
+  if (keyStr == 'd') {
     TANK.rotateBodyRight();
+  }
+  if (keyStr == 'e') {
+    TANK.shoot();
   }
 }
 
@@ -133,16 +77,8 @@ function drawRect(centerX, centerY, angle){
   context.rect(centerX - x, centerY - y, tankWidth, tankHeight)
   context.translate(centerX, centerY)
   context.rotate(angle);
-  // x = -1 * Math.sin(angle) * Math.sqrt(tankWidth**2 + tankHeight**2) * 0.5
-  // y = Math.cos(angle) * Math.sqrt(tankWidth**2 + tankHeight**2) * 0.5
 
   context.rotate(-1 * angle);
   context.translate(-1 * centerX, -1 * centerY)
   context.stroke();
 }
-
-
-
-// function distance(x1, y1, x2, y2, ){
-//
-// }
