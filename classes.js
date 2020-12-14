@@ -67,7 +67,7 @@ class Tank {
     for (var i = 0; i < this.pellets.length; i++) {
       this.pellets[i].draw();
     }
-    context.rect(this.x, this.y, tankWidth, tankLength);
+    context.rect(this.x-tankWidth/2, this.y - tankLength/2, tankWidth, tankLength);
 
     // context.rotate(-1 * this.bodyRotation);
     // context.translate(this.x, this.y);
